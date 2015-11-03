@@ -1,0 +1,18 @@
+#This File will be used as database.yml file in OpenProject
+
+production:
+  adapter: mysql2
+  database: openproject
+  host: localhost
+  username: root
+  password:
+  encoding: utf8
+
+#development:
+#  adapter: mysql2
+#  database: openproject_development
+#  host: localhost
+#  username: root
+#  password:
+#  encoding: utf8
+

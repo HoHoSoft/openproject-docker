@@ -1,0 +1,14 @@
+#This file is used as the configuration.yml
+
+production:                          #main level
+  email_delivery_method: :smtp       #settings for the production environment
+  smtp_address: smtp.gmail.com
+  smtp_port: 587
+  smtp_domain: smtp.gmail.com
+  smtp_user_name: ***@gmail.com
+  smtp_password: ****
+  smtp_enable_starttls_auto: true
+  smtp_authentication: plain
+
+rails_cache_store: :memcache
+
