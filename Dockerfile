@@ -42,17 +42,41 @@ USER root
 RUN apt-get install -y apache2 libcurl4-gnutls-dev      \
                                apache2-threaded-dev libapr1-dev \
                                libaprutil1-dev
-
-RUN chmod o+x "/ruby/openproject"
+USER root
+ADD ./installapache.sh /ruby/installapache.sh
+RUN chmod a+x /ruby/installapache.sh
 USER openproject
-RUN cd /ruby/openproject
-RUN gem install passenger
-RUN passenger-install-apache2-module -a
+RUN /ruby/installapache.sh
+
 USER root
 RUN touch /etc/apache2/mods-available/passenger.load
-RUN echo "" >> /etc/apache2/mods-available/passenger.load
+RUN echo "LoadModule passenger_module /home/openproject/.rbenv/versions/2.1.6/lib/ruby/gems/2.1.0/gems/passenger-5.0.21/buildout/apache2/mod_passenger.so" >> /etc/apache2/mods-available/passenger.load
+RUN echo -e "<IfModule mod_passenger.c>\n" \
+   "  PassengerRoot /home/openproject/.rbenv/versions/2.1.6/lib/ruby/gems/2.1.0/gems/passenger-5.0.21 \n"\
+   "  PassengerDefaultRuby /home/openproject/.rbenv/versions/2.1.6/bin/ruby \n"\
+   "</IfModule>" >> /etc/apache2/mods-available/passenger.conf
+RUN cat /etc/apache2/mods-available/passenger.conf
+RUN a2enmod passenger
 
-
+#Now setup a config
+RUN touch /etc/apache2/sites-available/openproject.conf
+RUN echo -e "SetEnv EXECJS_RUNTIME Disabled\n"\
+"\n"\
+"<VirtualHost *:80>\n"\
+"   ServerName yourdomain.com\n"\
+"   # !!! Be sure to point DocumentRoot to 'public'!\n"\
+"   DocumentRoot /ruby/openproject/public\n"\
+"   <Directory /ruby/openproject/public>\n"\
+"      # This relaxes Apache security settings.\n"\
+"      AllowOverride all\n"\
+"      # MultiViews must be turned off.\n"\
+"      Options -MultiViews\n"\
+"      # Uncomment this if you're on Apache >= 2.4:\n"\
+"      Require all granted\n"\
+"   </Directory>\n"\
+"</VirtualHost>\n" >> /etc/apache2/sites-available/openproject.conf
+RUN a2dissite 000-default
+RUN a2ensite openproject
 
 
 RUN cd /

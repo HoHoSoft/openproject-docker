@@ -1,5 +1,8 @@
 # openproject-docker
-Docker container for the latest openproject version 
+Docker container for the latest openproject version.
+The script starts an openproject container with an apache http server and a mysql connection.
+You only need to provide a mysql db connection, a smtp server and a volume for the stored data.
+ 
 
 ## Installation
 #### Configuration
@@ -21,7 +24,7 @@ production:
 
 rails_cache_store: :memcache
 ```
-##### configuration.yml
+##### database.yml
 A minimal database configuration looks like this.
 ```yml
 production:
