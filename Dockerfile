@@ -85,6 +85,6 @@ RUN chmod +x /run.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ################	##############################
-VOLUME ["/var/config"]
+VOLUME ["/var/config", "/ruby/openproject/files"]
 EXPOSE 80
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
