@@ -16,11 +16,14 @@ RUN apt-get install -y zlib1g-dev build-essential \
 #Install memcached
 RUN apt-get install -y memcached
 
+# Install supervisor
+RUN apt-get install -y supervisor
+
 #Prepare for Ruby installation
 RUN mkdir /ruby
 RUN chmod -R 771 /ruby
 RUN chown -R openproject:openproject /ruby
- 
+
 #Install Ruby & Node ... & Openproject
 ADD ./installruby.sh /ruby/installruby.sh
 RUN chmod a+x /ruby/installruby.sh
@@ -32,10 +35,6 @@ ADD ./installopenproject.sh /ruby/installopenproject.sh
 RUN chmod a+x /ruby/installopenproject.sh
 USER openproject
 RUN /ruby/installopenproject.sh
-
-
-
-
 
 #Install Apache2
 USER root
@@ -83,7 +82,9 @@ RUN cd /
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 ################	##############################
 VOLUME ["/var/config"]
 EXPOSE 80
-CMD ["/run.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
