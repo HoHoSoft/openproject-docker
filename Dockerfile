@@ -28,10 +28,10 @@ RUN apt-get update  -y &&  apt-get install -y \
 			supervisor \
 			zlib1g-dev
 
-#Prepare for Ruby installation
-RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 #Create openrpoject group and user
 RUN groupadd openproject && useradd --create-home -p ! --gid openproject openproject
+#Prepare for Ruby installation
+RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 
 #Install Ruby & Node ... & Openproject
 ADD ./scripts /scripts
