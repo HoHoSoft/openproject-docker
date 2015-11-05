@@ -15,7 +15,7 @@ RUN apt-get update  -y &&  apt-get install -y \
 			libcurl4-gnutls-dev \
 			libffi-dev \
 			libgdbm-dev \
-			libmysqlclient-dev 
+			libmysqlclient-dev \
 			libncurses5-dev \
 			libreadline-dev \
 			libssl-dev \
