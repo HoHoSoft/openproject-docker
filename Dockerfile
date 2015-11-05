@@ -35,7 +35,7 @@ RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 
 #Install Ruby & Node ... & Openproject
 ADD ./scripts /scripts
-RUN chmod a+x /scrd ipts/*.sh
+RUN chmod a+x /scripts/*.sh
 #Install Apache2
 USER openproject
 RUN /scripts/installruby.sh
