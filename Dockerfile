@@ -2,22 +2,34 @@ FROM debian:jessie
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 #Create openrpoject group and user
-RUN groupadd openproject
-RUN useradd --create-home -p ! --gid openproject openproject
+RUN groupadd openproject && useradd --create-home -p ! --gid openproject openproject
 
 #Installation of essentials
-RUN apt-get update  -y
-RUN apt-get install -y zlib1g-dev build-essential \
-                    libssl-dev libreadline-dev            \
-                    libyaml-dev libgdbm-dev               \
-                    libncurses5-dev automake              \
-                    libtool bison libffi-dev git curl     \
-                    libxml2 libxml2-dev libxslt1-dev libmysqlclient-dev # nokogiri
-#Install memcached
-RUN apt-get install -y memcached
-
-# Install supervisor
-RUN apt-get install -y supervisor
+RUN apt-get update  -y &&  apt-get install -y \
+			automake \
+			apache2 \
+			apache2-threaded-dev \
+			build-essential \
+			bison \
+			curl \
+			git \
+			libapr1-dev \
+			libaprutil1-dev \
+			libcurl4-gnutls-dev \
+			libffi-dev \
+			libgdbm-dev \
+			libmysqlclient-dev # nokogiri \
+			libncurses5-dev \
+			libreadline-dev \
+			libssl-dev \
+			libtool \
+			libxml2 \
+			libxml2-dev \
+			libxslt1-dev \
+			libyaml-dev \
+			memcached \
+			supervisor \
+			zlib1g-dev
 
 #Prepare for Ruby installation
 RUN mkdir /ruby
@@ -37,10 +49,6 @@ USER openproject
 RUN /ruby/installopenproject.sh
 
 #Install Apache2
-USER root
-RUN apt-get install -y apache2 libcurl4-gnutls-dev      \
-                               apache2-threaded-dev libapr1-dev \
-                               libaprutil1-dev
 USER root
 ADD ./installapache.sh /ruby/installapache.sh
 RUN chmod a+x /ruby/installapache.sh
