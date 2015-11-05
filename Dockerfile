@@ -39,8 +39,8 @@ RUN chmod a+x /scripts/*.sh
 #Install Apache2
 USER openproject
 RUN /scripts/installruby.sh
-RUN /scripts/installapache.sh
 RUN /scripts/installopenproject.sh
+RUN /scripts/installpassenger.sh
 
 USER root
 ADD /var/config/passenger.* /etc/apache2/mods-available/
