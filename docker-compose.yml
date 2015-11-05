@@ -1,0 +1,21 @@
+openproject:
+  build: .
+#  external_links:
+#    - "mysql_db_1:db"
+  links:
+    - "db:db"
+  volumes:
+    - ./config:/var/config
+  ports:
+    - "8088:80"
+db:
+  image: mysql:5.6
+  volumes:
+    - ./volumes/mysql/data:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: my-secret-pw
+    MYSQL_DATABASE: openproject
+    MYSQL_USER: openproject
+    MYSQL_PASSWORD: my_password
+  ports:
+    - "33060:3306"
