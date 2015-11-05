@@ -5,6 +5,7 @@ source /home/openproject/.profile
 cd /ruby/openproject
 cp /var/config/configuration.yml config/configuration.yml
 cp /var/config/database.yml config/database.yml
+cp /var/config/Gemfile.plugins Gemfile.plugins
 
 # if Gemfile.plugins was changed
 bundle install
