@@ -43,11 +43,11 @@ RUN /scripts/installopenproject.sh
 RUN /scripts/installpassenger.sh
 
 USER root
-ADD /var/config/passenger.* /etc/apache2/mods-available/
+ADD ./config/passenger.* /etc/apache2/mods-available/
 RUN a2enmod passenger
 
 #Now setup a config
-ADD /var/config/openproject.conf /etc/apache2/sites-available/openproject.conf
+ADD ./config/openproject.conf /etc/apache2/sites-available/openproject.conf
 RUN a2dissite 000-default && a2ensite openproject
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
