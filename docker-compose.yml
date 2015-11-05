@@ -6,7 +6,7 @@ openproject:
     - "db:db"
   volumes:
     - ./config:/var/config
-	- ./volumes/openproject/files:/ruby/openproject/files
+    - ./volumes/openproject/files:/ruby/openproject/files
   ports:
     - "8088:80"
 db:
