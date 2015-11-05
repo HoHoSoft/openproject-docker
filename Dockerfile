@@ -32,9 +32,7 @@ RUN apt-get update  -y &&  apt-get install -y \
 			zlib1g-dev
 
 #Prepare for Ruby installation
-RUN mkdir /ruby
-RUN chmod -R 771 /ruby
-RUN chown -R openproject:openproject /ruby
+RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 
 #Install Ruby & Node ... & Openproject
 ADD ./installruby.sh /ruby/installruby.sh
