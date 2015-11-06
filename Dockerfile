@@ -34,7 +34,7 @@ RUN groupadd openproject && useradd --create-home -p ! --gid openproject openpro
 RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 
 #Install Ruby & Node ... & Openproject
-ADD ./scripts /scripts
+ADD ./scripts/*.sh /scripts
 RUN chmod a+x /scripts/*.sh
 #Install Apache2
 USER openproject
@@ -43,14 +43,14 @@ RUN /scripts/installopenproject.sh
 RUN /scripts/installpassenger.sh
 
 USER root
-ADD ./config/passenger.* /etc/apache2/mods-available/
+ADD ./scripts/passenger.* /etc/apache2/mods-available/
 RUN a2enmod passenger
 
 #Now setup a config
-ADD ./config/openproject.conf /etc/apache2/sites-available/openproject.conf
+ADD ./scripts/openproject.conf /etc/apache2/sites-available/openproject.conf
 RUN a2dissite 000-default && a2ensite openproject
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD ./scripts/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ################	##############################
 VOLUME ["/var/config", "/ruby/openproject/files"]
