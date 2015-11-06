@@ -34,7 +34,7 @@ RUN groupadd openproject && useradd --create-home -p ! --gid openproject openpro
 RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
 
 #Install Ruby & Node ... & Openproject
-ADD ./scripts/*.sh /scripts
+ADD ./scripts/*.sh /scripts/
 RUN chmod a+x /scripts/*.sh
 #Install Apache2
 USER openproject
