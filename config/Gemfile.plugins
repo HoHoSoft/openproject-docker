@@ -1,0 +1,10 @@
+#gem "openproject-help_link", :git => "https://github.com/finnlabs/openproject-help_link.git", :branch => "stable/4.2"
+gem "openproject-pdf_export", :git => "https://github.com/finnlabs/openproject-pdf_export.git", :branch => "stable/4.2"
+gem "openproject-backlogs", :git => "https://github.com/finnlabs/openproject-backlogs.git", :branch => "stable/4.2"
+gem "openproject-global_roles", :git => "https://github.com/finnlabs/openproject-global_roles.git", :branch => "stable/4.2"
+gem "openproject-meeting", :git => "https://github.com/finnlabs/openproject-meeting.git", :branch => "stable/4.2"
+gem 'openproject-my_project_page', :git => 'https://github.com/finnlabs/openproject-my_project_page.git', :branch => 'stable/4.2'
+gem 'openproject-documents', :git => 'https://github.com/opf/openproject-documents.git', :branch => 'stable/4.2'
+gem 'reporting_engine', :git => 'https://github.com/finnlabs/reporting_engine.git', :branch => 'release/1.1'
+gem 'openproject-costs', :git => 'https://github.com/finnlabs/openproject-costs.git', :branch => 'stable/4.2'
+gem 'openproject-reporting', :git => 'https://github.com/finnlabs/openproject-reporting.git', :branch => 'stable/4.2'
