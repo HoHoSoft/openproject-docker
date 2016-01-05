@@ -4,10 +4,8 @@ FROM debian:jessie
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 #Installation of essentials
-RUN apt-get update  -y &&  apt-get install -y \
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 			automake \
-			apache2 \
-			apache2-threaded-dev \
 			build-essential \
 			bison \
 			curl \
@@ -27,37 +25,36 @@ RUN apt-get update  -y &&  apt-get install -y \
 			libxslt1-dev \
 			libyaml-dev \
 			memcached \
+			nginx \
 			supervisor \
 			zlib1g-dev
 
 # Create openproject group and user
 RUN groupadd openproject && useradd --create-home -p ! --gid openproject openproject
 
-# Prepare for Ruby installation
-RUN mkdir /ruby && chmod -R 771 /ruby && chown -R openproject:openproject /ruby
-
-# Add install and run scripts
-ADD ./scripts/*.sh /scripts/
+# Add install scripts
+ADD ./scripts/install_ruby_node.sh ./scripts/install_openproject.sh /scripts/
 RUN chmod a+x /scripts/*.sh
 
 # Install required software
 USER openproject
 RUN /scripts/install_ruby_node.sh
 RUN /scripts/install_openproject.sh
-RUN /scripts/install_passenger.sh
 
-# Enable passenger
+# Configure nginx
 USER root
-ADD ./scripts/passenger.* /etc/apache2/mods-available/
-RUN a2enmod passenger
+ADD ./scripts/openproject.conf /etc/nginx/sites-available/openproject.conf
+RUN sed -i "s/user www-data;/user openproject;/" /etc/nginx/nginx.conf && \
+    echo "daemon off;" >> /etc/nginx/nginx.conf && \
+    rm /etc/nginx/sites-enabled/default && \
+    ln -s /etc/nginx/sites-available/openproject.conf /etc/nginx/sites-enabled/
 
-# Apache site config
-ADD ./scripts/openproject.conf /etc/apache2/sites-available/openproject.conf
-RUN a2dissite 000-default && a2ensite openproject
-
+# Add run scripts
+ADD ./scripts/run.sh ./scripts/env.sh ./scripts/setup.sh /scripts/
+RUN chmod a+x /scripts/*.sh
 ADD ./scripts/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
-VOLUME ["/var/config", "/ruby/openproject/files"]
+VOLUME ["/var/config", "/home/openproject/openproject/files"]
 EXPOSE 80
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/scripts/run.sh"]
