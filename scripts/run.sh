@@ -3,7 +3,6 @@
 cd /home/openproject/openproject
 cp /var/config/configuration.yml config/configuration.yml
 cp /var/config/database.yml config/database.yml
-cp /var/config/Gemfile.plugins Gemfile.plugins
 cp /var/config/Gemfile.local Gemfile.local
 
 if [ ! -f /var/config/.setup-complete ]; then

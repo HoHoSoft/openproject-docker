@@ -10,11 +10,13 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 			bison \
 			curl \
 			git \
+			imagemagick \
 			libapr1-dev \
 			libaprutil1-dev \
 			libcurl4-gnutls-dev \
 			libffi-dev \
 			libgdbm-dev \
+			libmagickwand-dev \
 			libmysqlclient-dev \
 			libncurses5-dev \
 			libreadline-dev \
