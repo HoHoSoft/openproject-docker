@@ -29,7 +29,9 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 			memcached \
 			nginx \
 			supervisor \
-			zlib1g-dev
+			zlib1g-dev && \
+		apt-get clean && \
+		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create openproject group and user
 RUN groupadd openproject && useradd --create-home -p ! --gid openproject openproject
