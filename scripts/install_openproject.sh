@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Install Openproject
+# Install OpenProject
+cd /home/openproject
 source /home/openproject/.profile
-git clone https://github.com/opf/openproject.git /ruby/openproject
-cd /ruby/openproject
-git checkout v4.2.9
+git clone https://github.com/opf/openproject-ce.git --branch stable/5 --depth 1 openproject
+cd openproject
+git checkout v5.0.16
 gem install bundler
-bundle install --path vendor/bundle --without postgres sqlite rmagick development test therubyracer
+npm config set registry http://registry.npmjs.org/
+bundle install --path vendor/bundle --without postgres sqlite development test therubyracer
 npm install

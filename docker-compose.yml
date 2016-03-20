@@ -6,9 +6,9 @@ openproject:
     - "db:db"
   volumes:
     - ./config:/var/config
-    - ./volumes/openproject/files:/ruby/openproject/files
+    - ./volumes/openproject/files:/home/openproject/openproject/files
   ports:
-    - "8088:80"
+    - "8080:80"
 db:
   image: mysql:5.6
   volumes:
@@ -18,5 +18,5 @@ db:
     MYSQL_DATABASE: openproject
     MYSQL_USER: openproject
     MYSQL_PASSWORD: my_password
-  ports:
-    - "33060:3306"
+#  ports:
+#    - "33060:3306"

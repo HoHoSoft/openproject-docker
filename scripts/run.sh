@@ -1,18 +1,16 @@
 #!/bin/sh
 
-source /home/openproject/.profile
-
-cd /ruby/openproject
+cd /home/openproject/openproject
 cp /var/config/configuration.yml config/configuration.yml
 cp /var/config/database.yml config/database.yml
-cp /var/config/Gemfile.plugins Gemfile.plugins
+cp /var/config/Gemfile.local Gemfile.local
 
-# if Gemfile.plugins was changed
-bundle install
-npm install
+if [ ! -f /var/config/.setup-complete ]; then
+  echo -e "Running setup\n"
+  su -c "/scripts/setup.sh" openproject
 
-bundle exec rake db:create:all
-bundle exec rake generate_secret_token
-RAILS_ENV="production" bundle exec rake db:migrate
-RAILS_ENV="production" bundle exec rake db:seed
-RAILS_ENV="production" bundle exec rake assets:precompile
+  touch /var/config/.setup-complete
+fi
+
+echo -e "Starting supervisor\n"
+supervisord -c /etc/supervisor/conf.d/supervisord.conf -n

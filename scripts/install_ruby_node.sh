@@ -7,9 +7,9 @@ echo 'eval "$(rbenv init -)"' >> /home/openproject/.profile
 source /home/openproject/.profile
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-rbenv install 2.1.6
+rbenv install 2.1.7
 rbenv rehash
-rbenv global 2.1.6
+rbenv global 2.1.7
 
 # Install Node
 git clone https://github.com/OiNutter/nodenv.git ~/.nodenv
