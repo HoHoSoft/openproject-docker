@@ -36,6 +36,9 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 # Create openproject group and user
 RUN groupadd openproject && useradd --create-home -p ! --gid openproject openproject
 
+# Set Openproject version
+ENV OPENPROJECT_VERSION v5.0.16
+
 # Add install scripts
 ADD ./scripts/install_ruby_node.sh ./scripts/install_openproject.sh /scripts/
 RUN chmod a+x /scripts/*.sh
